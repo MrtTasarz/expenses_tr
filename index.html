@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+  <script src="index.js" defer></script>
+  <link rel="stylesheet" href="css/glide.core.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <title>Expenses Tracker</title>
+</head>
+
+<body>
+  <div class="container">
+    <h3>EXPENSES TRACKER</h3>
+
+    <!-- main view -->
+    <main>
+      <!-- slider totals -->
+      <div id="saldo-container">
+        <div class="glide">
+          <div class="glide__track" data-glide-el="track">
+            <ul class="glide__slides">
+              <li class="glide__slide">
+                <div>
+                  <h4>total: <span id="current-money">0.00$</span></h4>
+                </div>
+              </li>
+              <li class="glide__slide">
+                <div>
+                  <h4>total incomes: <span id="current-incomes"></span></h4>
+                </div>
+              </li>
+              <li class="glide__slide">
+                <div>
+                  <h4>total expenses: <span id="current-expenses"></span></h4>
+                </div>
+              </li>
+
+            </ul>
+          </div>
+          <div class="glide__bullets" data-glide-el="controls[nav]">
+            <button class="glide__bullet" data-glide-dir="=0"></button>
+            <button class="glide__bullet" data-glide-dir="=1"></button>
+            <button class="glide__bullet" data-glide-dir="=2"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="history-container">
+        <h3>History</h3>
+        <select id="sort" placeholder="Filter">
+          <option disabled selected value>filter by</option>
+          <option value="no-filter" id="no-filter">No filter</option>
+          <option value="incomes" id="filt-inc">Incomes</option>
+          <option value="expenses" id="filt-exp">Expenses</option>
+        </select>
+        <div id="history">
+          <ul id="list">
+          </ul>
+        </div>
+      </div>
+
+      <div id="add-new">
+        <form id="add">
+          <label for="genere">Add name</label>
+          <input type="text" id="text">
+          <label for="amount">Add amount</label>
+          <span>Add + for income, or - for expense</span>
+          <input type="number" name="amount" id="amount">
+          <button type="button" class="btn" id="add-btn">Add</button>
+        </form>
+      </div>
+
+    </main>
+  </div>
+  <!-- <script src="node_modules/@glidejs/glide/dist/glide.min.js"></script> -->
+
+  <script>
+    const config = {
+      startAt: 0,
+      perView: 1,
+
+    }
+    new Glide('.glide', config).mount();
+  </script>
+</body>
+
+</html>
