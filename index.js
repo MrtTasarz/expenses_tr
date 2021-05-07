@@ -10,11 +10,21 @@ const amount = document.getElementById('amount')
 const add_btn = document.getElementById('add-btn')
 const add_div = document.getElementById('add-new')
 const select = document.getElementById('sort')
-
+const sign = document.getElementById('sign')
+const openModal = document.getElementById('add-transaction')
+const closeModalBtn = document.getElementById('close-modal')
 
 const localStorageTransactions = JSON.parse(localStorage.getItem('transactions'));
 
 let transactions = localStorage.getItem('transactions') !== null ? localStorageTransactions : [];
+
+function openModalWindow() {
+  add_div.classList.add('modal')
+}
+
+function closeModal() {
+  add_div.classList.remove('modal')
+}
 // show warning
 
 function showWarning() {
@@ -31,19 +41,24 @@ function showWarning() {
 // add transaction
 function addTransaction() {
   const rand = Math.floor(Math.random() * 999)
+
   if (text.value === '' || amount.value === '') {
     showWarning()
   } else {
+    if (sign.value === "-") {
+      amount.value = "-" + amount.value
+    }
     const transaction = {
       id: rand,
       text: text.value,
-      amount: +amount.value
+      amount: +amount.value,
+      sign: sign.value
     }
     transactions.push(transaction)
     addTransactionToDOM(transaction)
     calculateValues()
     updateLocalStorage()
-
+    closeModal()
     text.value = '';
     amount.value = '';
   }
@@ -51,7 +66,9 @@ function addTransaction() {
 
 function addTransactionToDOM(transaction) {
   const li = document.createElement('li')
-  li.innerHTML = `<span>${transaction.text}</span> <span>${transaction.amount}</span><button type="button" class="delete-btn" onClick=deleteTransaction(${transaction.id})>X</button>`
+  transaction.sign === "+" ? li.classList.add('plus') : li.classList.add('minus')
+  li.classList.add('list-item')
+  li.innerHTML = `<span>${transaction.text}</span> <span>${transaction.amount.toFixed(2)}</span><button type="button" class="delete-btn" onClick=deleteTransaction(${transaction.id})><i class="fas fa-minus-circle"></i></button>`
   list.appendChild(li)
 }
 
@@ -78,7 +95,7 @@ function calculateValues() {
     .toFixed(2)
 
   const total = amounts.reduce((acc, cv) => (acc + cv), 0).toFixed(2)
-
+  total >= 0 ? current_money.style.color = "#00ac6a" : current_money.style.color = "#ff4949"
   current_money.innerText = `$${total}`;
   current_incomes.innerText = `$${incomes}`;
   current_expenses.innerText = `$${expenses}`;
@@ -117,10 +134,14 @@ function updateLocalStorage() {
 function initialize() {
   list.innerHTML = '';
   transactions.forEach(addTransactionToDOM)
+  current_incomes.classList.add('plus')
+  current_expenses.classList.add('minus')
   calculateValues()
 }
 
 initialize()
+openModal.addEventListener('click', openModalWindow)
+closeModalBtn.addEventListener('click', closeModal)
 delete_btn.forEach(deleteTransaction)
 add_btn.addEventListener('click', addTransaction)
 select.addEventListener('change', optionsFunc)

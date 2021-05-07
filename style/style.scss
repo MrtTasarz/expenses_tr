@@ -1,18 +1,109 @@
+$font: "Lato", sans-serif;
+$background: #f4f4f4;
+$primary: #9c6dff;
+$minus: #ff4949;
+$plus: #00ac6a;
+
 * {
   box-sizing: border-box;
 }
 
 body {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  font-family: $font;
+  background-color: $background;
 }
 
 .container {
-  border: 5px solid black;
-  padding: 4em;
-  width: 50vw;
+  padding: 1em;
+}
+
+h3 {
+  font-size: 1.7em;
+  text-transform: uppercase;
+}
+
+h4 {
+  font-size: 1.3em;
+  text-transform: uppercase;
+}
+
+p {
+  text-transform: uppercase;
+  font-size: 1.1em;
+}
+
+.container--border {
+  border-radius: 25px;
+  border: 1px solid #000;
+  padding: 0.5em;
+
+  .glide__slide {
+    text-align: center;
+  }
+
+  .list-item {
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    position: relative;
+    padding: 0.5em 0;
+    text-transform: uppercase;
+    &:hover {
+      .delete-btn {
+        display: block;
+      }
+    }
+
+    .delete-btn {
+      position: absolute;
+      font-size: 1.5em;
+      top: 20;
+      left: 0;
+      border: none;
+      background-color: transparent;
+      color: $minus;
+      cursor: pointer;
+      display: none;
+    }
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .sort {
+    cursor: pointer;
+    border: none;
+    padding: 0.2em;
+    text-transform: uppercase;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: transparent;
+    &:hover {
+      color: $primary;
+    }
+    &:focus {
+      outline: 1px solid #000;
+    }
+  }
+}
+
+.list-container {
+  max-height: 224px;
+  overflow-y: scroll;
+}
+
+.add {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  right: 50%;
+  font-size: 2.5em;
+  color: $primary;
+  cursor: pointer;
+  padding: 2em 0;
 }
 
 .warning {
@@ -22,8 +113,119 @@ body {
   font-size: 20px;
 }
 
-#current-expenses {
+.none {
+  display: none;
+}
+
+.modal {
+  position: absolute;
   display: block;
-  color: black;
-  visibility: visible;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 0;
+  background-color: #9b6dffd3;
+  animation: height 0.5s ease-in-out forwards;
+}
+
+.column {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 1em;
+  position: relative;
+}
+
+input {
+  border: none;
+  padding: 0.5em 1em;
+  width: 100%;
+  margin: 0.5em 0;
+  &:focus {
+    outline: $primary 2px solid;
+  }
+}
+
+label {
+  text-transform: uppercase;
+  color: $background;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.amount_sign {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  .sign {
+    padding: 0.41em 0;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.close-btn {
+  font-size: 2em;
+  color: $background;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 1.4em;
+  cursor: pointer;
+  transition: transform 0.5s ease-in-out;
+
+  &:hover {
+    transform: rotate(-180deg);
+  }
+}
+
+.plus {
+  color: $plus;
+  font-weight: bold;
+}
+
+.minus {
+  color: $minus;
+  font-weight: bold;
+}
+
+.btn {
+  width: 100%;
+  border: 1px solid $background;
+  background-color: transparent;
+  text-transform: uppercase;
+  color: $background;
+  font-weight: bold;
+  padding: 0.5em 0;
+  &:hover {
+    background-color: $background;
+    color: $primary;
+  }
+}
+
+@keyframes height {
+  0% {
+    height: 0%;
+  }
+
+  100% {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .glide__bullets {
+    display: none;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .container {
+    padding: 2em 6em;
+  }
 }
